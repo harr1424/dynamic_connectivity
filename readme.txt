@@ -1,4 +1,3 @@
-/*
         A Programming Assignment for Data Structures and Algorithms completed
         by John Harrington in October, 2020.
 
@@ -24,4 +23,4 @@
 
         Supporting code for this assignment is part of the Algorithms Fourth Edition
         Library and can be found here: https://algs4.cs.princeton.edu/code/
-*/
+
