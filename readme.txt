@@ -22,5 +22,5 @@
         the desired size of the Percolation object and the number of independent trials to run.
 
         Supporting code for this assignment is part of the Algorithms Fourth Edition
-        Library and can be found here: https://algs4.cs.princeton.edu/code/
+        Library and can be found here: https://algs4.cs.princeton.edu/code/  
 
