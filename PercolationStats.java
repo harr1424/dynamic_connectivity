@@ -42,13 +42,13 @@ public class PercolationStats {
         threshold = new double[T];
         numTrials = T;
 
-        for (int i = 0; i < T; i++) { // do the following for each indpeendent trial:
+        for (int i = 0; i < T; i++) { // do the following for each independent trial:
             p = new Percolation(N);   // create new Percolation object
             while (!p.percolates()) {   // check if it percolates, if it doesn't:
                 int row = getRandom();  // get random row
                 int col = getRandom();  // get random column
                 if (!p.isOpen(row, col)) { //  has this site already been opened? If it has, disregard it
-                    p.open(row, col);     // otherwise open it
+                    p.open(row, col);     // otherwise, open it
                 }
             }
             threshold[i] = (double) p.numberOfOpenSites() / (double) (N * N);  // record proportion of sites opened when percolation succeeded
@@ -71,7 +71,7 @@ public class PercolationStats {
 
     // low  endpoint of 95% confidence interval
     public double confidenceLow() {
-        return (mean()-(1.96 * stddev()) / Math.sqrt(numTrials));  // formula from Travis
+        return (mean()-(1.96 * stddev()) / Math.sqrt(numTrials));
     }
 
     // high of 95% confidence interval
@@ -82,10 +82,10 @@ public class PercolationStats {
     public static void main(String[] args) {
         Stopwatch sw = new Stopwatch();
         PercolationStats st = new PercolationStats(1000,100);
-         System.out.println("Mean: "+st.mean());
-         System.out.println("Standard Deviation: "+st.stddev());
-         System.out.println("Low end of CI: "+st.confidenceLow());
-         System.out.println("High end of CI: "+st.confidenceHigh());
+        System.out.println("Mean: "+st.mean());
+        System.out.println("Standard Deviation: "+st.stddev());
+        System.out.println("Low end of CI: "+st.confidenceLow());
+        System.out.println("High end of CI: "+st.confidenceHigh());
         System.out.println(sw.elapsedTime());
     }
 }

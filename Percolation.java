@@ -20,9 +20,9 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF qf; // this object will connect to source and sink
-    private WeightedQuickUnionUF qfNoSink; // this sobject will not connect to sink thereby eliminating backflow
+    private WeightedQuickUnionUF qfNoSink; // this object will not connect to sink thereby eliminating back-flow
     private boolean[] grid;
-    public int sizeN; // this will be accessed by PercolationStats
+    public int sizeN;
     private int source;
     private int sink;
 
@@ -37,7 +37,7 @@ public class Percolation {
             sink = (sizeN * sizeN) + 1;  // same as above but +1
         }
         catch (NegativeArraySizeException e) {
-            System.out.println("You must enter a positive integer, you entered a negative integer");
+            System.out.println("Integer N must be non-negative.");
             System.exit(-1);
         }
     }
@@ -52,20 +52,24 @@ public class Percolation {
             int leftIndex = (row * sizeN) + (col - 1);
             int rightIndex = (row * sizeN) + (col + 1);
 
-            if (((row != 0)) && (aboveIndex > -1)) { // bounds check for uppermost row and exclude any negative indices resulting from above operations
+            // bounds check for uppermost row and exclude any negative indices resulting from above operations
+            if (((row != 0)) && (aboveIndex > -1)) {
                 if ((grid[index] && (grid[aboveIndex]))) {
                     qf.union(((aboveIndex)), (index));
                     qfNoSink.union(aboveIndex,index);
                 }
             }
-            if ((row < (sizeN - 1))) {  // bounds check for lowermost row,
+
+            // bounds check for lowermost row
+            if ((row < (sizeN - 1))) {
                 if ((grid[index]) && (grid[belowIndex])) {
                     qf.union(belowIndex, index);
                     qfNoSink.union(belowIndex, index);
                 }
             }
 
-            if ((col != 0) && (leftIndex >-1) ){  // bounds check for left most column
+            // bounds check for left-most column
+            if ((col != 0) && (leftIndex >-1) ){
                 if ((grid[index] && (grid[leftIndex]))) {
                     qf.union(leftIndex, index);
                     qfNoSink.union(leftIndex, index);
@@ -73,7 +77,8 @@ public class Percolation {
                 }
             }
 
-            if (col != (sizeN - 1)) { // bounds check for right most column
+            // bounds check for right-most column
+            if (col != (sizeN - 1)) {
                 if ((grid[(row * sizeN) + col]) && (grid[rightIndex])) {
                     qf.union(rightIndex, index);
                     qfNoSink.union(rightIndex, index);
@@ -81,12 +86,14 @@ public class Percolation {
             }
 
             // union operations with source and sink
-            if (row == 0) {                 // if opened cell is in top row, connect it to source element
+            // if cell just opened is in top row, connect it to source element
+            if (row == 0) {
                 qf.union(index, source);
                 qfNoSink.union(index, source);
             }
 
-            if (row == sizeN - 1) {     // if opened cell is in bottom row, connect to sink element
+            // if cell just opened is in bottom row, connect to sink element
+            if (row == sizeN - 1) {
                 qf.union(index, sink);
             }
         }
@@ -96,7 +103,7 @@ public class Percolation {
         }
     }
 
-    // is the site (row, col) open?
+    // returns true if the element is open
     public boolean isOpen(int row, int col) {
         try {
             int index = (row * sizeN) + col;
@@ -106,32 +113,28 @@ public class Percolation {
 
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("You have attempted to open a site that doesn't exist");
+            System.out.println("You have attempted to check a site that doesn't exist");
             System.exit(-1);
         }
         return false;
     }
 
-    // is the site (row, col) full?
+    // returns true if the site is full (connected to the source)
     public boolean isFull(int row, int col) { //
         try {
-
             int index = (row * sizeN) + col;  // get 2D coordinates into 1D context
-
             if (qfNoSink.find(index) == qfNoSink.find(source)) {
                 return true;
             }
         }
-
          catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("You have checked a site for fullness, but that site doesn't exist!");
+            System.out.println("You have attempted to check a site that doesn't exist");
             System.exit(-1);
         }
-
         return false;
+    }
 
-            }
-
+    // returns the number of sites which have been eopened
     public int numberOfOpenSites() {
         int count = 0;
         for (int i = 0; i < sizeN * sizeN; i++) {
@@ -139,11 +142,10 @@ public class Percolation {
                 count++;
             }
         }
-
             return count;
     }
 
-    // does the system percolate? (is it connected from source to sink)
+    // returns true if the system percolates (is connected from source to sink)
     public boolean percolates() {
         if (qf.find(source) == qf.find(sink)) {
             return true;
