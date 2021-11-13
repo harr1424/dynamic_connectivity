@@ -10,8 +10,6 @@
         their Algorithms Coursera Course partnered with Princeton University.
         This program contains two classes: Percolation and PercolationStats.
 
-
-
         Supporting code for this assignment is part of the Algorithms Fourth Edition
         Library and can be found here: https://algs4.cs.princeton.edu/code/
 */
